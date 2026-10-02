@@ -1,0 +1,13 @@
+[project]
+name = "edge-waste-sorter-orin"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.3",
+    "onnx>=1.23.1",
+    "onnxruntime>=1.30.0",
+    "onnxslim>=0.1.97",
+    "pandas>=3.0.6",
+    "torch>=2.14.1",
+    "ultralytics>=8.4.171",
+]
