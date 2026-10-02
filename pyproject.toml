@@ -6,8 +6,20 @@ dependencies = [
     "numpy>=2.5.3",
     "onnx>=1.23.1",
     "onnxruntime>=1.30.0",
+    "onnxruntime-gpu>=1.30.0",
     "onnxslim>=0.1.97",
     "pandas>=3.0.6",
     "torch>=2.14.1",
+    "ultralytics>=8.4.171",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+host = [
+    "onnx>=1.23.1",
+    "onnxruntime>=1.30.0",
+    "onnxslim>=0.1.97",
     "ultralytics>=8.4.171",
 ]

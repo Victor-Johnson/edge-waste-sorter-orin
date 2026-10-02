@@ -1,1 +1,24 @@
 weights
+# Environment
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Model artefacts (large, reproducible from scripts)
+models/
+exports/
+*.onnx
+*.engine
+*.plan
+*.cache
+
+# Data: keep the calibration manifest, ignore the images
+data/calibration/*
+!data/calibration/manifest.txt
+data/sample_video/*
+
+# Tool run outputs
+benchmarks/runs/
+runs/
+wandb/
