@@ -24,3 +24,7 @@ data/Warp-D/
 benchmarks/runs/
 runs/
 wandb/
+.mlflow/
+mlartifacts/
+mlruns/
+mlflow.db
