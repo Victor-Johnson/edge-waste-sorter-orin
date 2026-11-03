@@ -17,6 +17,8 @@ exports/
 data/calibration/*
 !data/calibration/manifest.txt
 data/sample_video/*
+data/dataset.zip
+data/Warp-D/
 
 # Tool run outputs
 benchmarks/runs/
