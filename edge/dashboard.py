@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import threading
 import time
@@ -14,16 +15,36 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 
 from edge.pipeline.core import Settings, frames, infer_frame, new_decisions
+from edge.pipeline.decision_gate import DuplicateDecisionGate, GateConfig
+from edge.pipeline.policy import MaterialPolicy
 
 WEB = Path(__file__).resolve().parent / "web"
 
 
+def _sha256(path: str) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as stream:
+        for block in iter(lambda: stream.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 class PipelineState:
-    def __init__(self):
+    def __init__(self, settings: Settings | None = None):
         self.lock = threading.Lock()
         self.jpeg: bytes | None = None
         self.events = deque(maxlen=100)
         self.seen_track_ids: set[int] = set()
+        self.duplicate_gate = (DuplicateDecisionGate(GateConfig(
+            settings.duplicate_gate_min_iou, settings.duplicate_gate_max_track_gap_frames))
+            if settings and settings.duplicate_gate_enabled else None)
+        self.material_policy = (MaterialPolicy(
+            settings.policy_config,
+            model_sha256=_sha256(settings.model),
+            source_sha256=_sha256(settings.source) if Path(settings.source).is_file() else None)
+            if settings and settings.policy_enabled else None)
+        self.suppressed_duplicate_candidates = 0
+        self.recent_suppressions = deque(maxlen=20)
         self.decisions_total = 0
         self.latest: list[dict] = []
         self.frame_id = 0
@@ -45,6 +66,14 @@ class PipelineState:
                 "detections": self.latest,
                 "recent_events": list(self.events),
                 "decisions_total": self.decisions_total,
+                "duplicate_gate_enabled": self.duplicate_gate is not None,
+                "material_policy_enabled": self.material_policy is not None,
+                "policy_version": (self.material_policy.config.version
+                                   if self.material_policy else None),
+                "pending_tracks": (len(self.material_policy.active)
+                                   if self.material_policy else 0),
+                "suppressed_duplicate_candidates": self.suppressed_duplicate_candidates,
+                "recent_suppressions": list(self.recent_suppressions),
                 "error": self.error,
                 "finished": self.finished,
             }
@@ -54,7 +83,7 @@ def run_pipeline(settings: Settings, state: PipelineState) -> None:
     try:
         from ultralytics import YOLO
 
-        model = YOLO(settings.model)
+        model = YOLO(settings.model, task="detect")
         for frame_id, frame in enumerate(frames(settings.source), 1):
             if frame_id == 1:
                 with state.lock:
@@ -62,7 +91,19 @@ def run_pipeline(settings: Settings, state: PipelineState) -> None:
             annotated, events, latency = infer_frame(model, frame, settings, frame_id)
             encoded, buffer = cv2.imencode(".jpg", annotated, [cv2.IMWRITE_JPEG_QUALITY, 80])
             with state.lock:
-                decisions = new_decisions(events, state.seen_track_ids)
+                eligible = events
+                if state.duplicate_gate is not None:
+                    batch = state.duplicate_gate.process(events, frame_id)
+                    state.suppressed_duplicate_candidates += len(batch.suppressed)
+                    state.recent_suppressions.extend(batch.suppressed)
+                    eligible = [event for event in events if event["track_id"] is None
+                                or event["track_id"] in state.duplicate_gate.approved_ids]
+                if state.material_policy is not None:
+                    decisions = state.material_policy.process(eligible, frame_id)
+                elif state.duplicate_gate is not None:
+                    decisions = batch.decisions
+                else:
+                    decisions = new_decisions(events, state.seen_track_ids)
                 state.frame_id = frame_id
                 state.latest = events
                 state.events.extend(decisions)
@@ -70,6 +111,11 @@ def run_pipeline(settings: Settings, state: PipelineState) -> None:
                 state.latencies.append(latency)
                 if encoded:
                     state.jpeg = buffer.tobytes()
+        if state.material_policy is not None:
+            with state.lock:
+                final_decisions = state.material_policy.finish()
+                state.events.extend(final_decisions)
+                state.decisions_total += len(final_decisions)
     except Exception as exc:
         with state.lock:
             state.error = str(exc)
@@ -81,7 +127,7 @@ def run_pipeline(settings: Settings, state: PipelineState) -> None:
 
 def create_app(settings: Settings) -> FastAPI:
     app = FastAPI(title="Waste sorter edge dashboard")
-    state = PipelineState()
+    state = PipelineState(settings)
 
     @app.on_event("startup")
     def start():
