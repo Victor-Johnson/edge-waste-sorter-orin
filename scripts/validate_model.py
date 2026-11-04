@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -10,6 +11,8 @@ import yaml
 from ultralytics import YOLO
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from edge.tracking import log_record
 
 
 def resolve(path):
@@ -21,6 +24,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument("--mlflow", action="store_true", help="Log this run to the waste-sorter-edge MLflow experiment")
     args = parser.parse_args()
     config = yaml.safe_load((ROOT / "configs/project.yaml").read_text())
     model_path = resolve(args.model)
@@ -44,6 +48,8 @@ def main():
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record, indent=2))
+    if args.mlflow:
+        print("MLflow run:", log_record(record, output, "validation"))
 
 
 if __name__ == "__main__":

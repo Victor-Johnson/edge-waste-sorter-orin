@@ -13,6 +13,7 @@ from pathlib import Path
 import cv2
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from edge.pipeline.core import frames, infer_frame, load_settings
+from edge.tracking import log_record
 
 
 def percentile(values, fraction):
@@ -28,6 +29,7 @@ def main():
     parser.add_argument("--frames", type=int, default=300)
     parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--out", required=True)
+    parser.add_argument("--mlflow", action="store_true", help="Log this run to the waste-sorter-edge MLflow experiment")
     args = parser.parse_args()
     from dataclasses import replace
     from ultralytics import YOLO
@@ -61,6 +63,8 @@ def main():
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record, indent=2))
+    if args.mlflow:
+        print("MLflow run:", log_record(record, output, "benchmark"))
 
 
 if __name__ == "__main__":
