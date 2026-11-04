@@ -46,12 +46,17 @@ def test_settings_resolve_overrides_before_validation(tmp_path):
     config.write_text("model: missing.pt\nsource: missing.mp4\n")
     model = tmp_path / "chosen.engine"
     video = tmp_path / "replay.mp4"
+    tracker = tmp_path / "configs" / "trackers" / "fast.yaml"
     model.touch()
     video.touch()
+    tracker.parent.mkdir()
+    tracker.write_text("tracker_type: botsort\n")
     settings = load_settings(config, model_override="chosen.engine",
-                             source_override="replay.mp4")
+                             source_override="replay.mp4",
+                             tracker_override="configs/trackers/fast.yaml")
     assert settings.model == str(model)
     assert settings.source == str(video)
+    assert settings.tracker == str(tracker)
 
 
 def test_percentile():
