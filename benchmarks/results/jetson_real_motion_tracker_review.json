@@ -1,0 +1,40 @@
+{
+  "stage": "tracker_identity_review",
+  "source": "data/sample_video/pexels-plastic-bottles-13662401.mp4",
+  "source_url": "https://www.pexels.com/video/people-working-in-sorting-plastic-bottles-13662401/",
+  "creator": "Peter Hanzo",
+  "source_license": "Pexels License",
+  "source_license_url": "https://www.pexels.com/license/",
+  "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f",
+  "model": "exports/02_yolo26m_best_fp16.engine",
+  "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "classes_sha256": "ec60e662b7f0f6edab5e004c740f5c08d313fd48c323266742129df68f4321e7",
+  "ultralytics": "8.3.59",
+  "image_size": 640,
+  "confidence": 0.35,
+  "frames": 275,
+  "source_fps": 30,
+  "source_size": [720, 1280],
+  "method": "Run scripts/jetson_track_review.py on the full clip twice from frame 1 with persistent tracking. Compare the per-frame JSONL IDs and inspect annotated frames near 242-264. Then use sparse human landmarks on two objects in benchmarks/annotations/pexels_plastic_bottle_landmarks.json. This is not a complete tracking ground truth.",
+  "default": {
+    "tracker": "botsort.yaml",
+    "tracker_config_sha256": "14322b677840851b4c7c397ae78a6dd4721ec663ea94540afb7950e03d2d17ce",
+    "frame_level_detections": 246,
+    "global_unique_track_ids": 5,
+    "untracked_detections": 0
+  },
+  "no_gmc": {
+    "tracker": "configs/trackers/botsort_no_gmc.yaml",
+    "tracker_config_sha256": "301430fca16927443321e0ec4a0e5296946164a0dfd95e147df8783c97746d58",
+    "frame_level_detections": 246,
+    "global_unique_track_ids": 5,
+    "untracked_detections": 0
+  },
+  "observations": {
+    "variant_comparison": "The two runs have identical class and track-ID counts on every frame; the observed track IDs are identical frame by frame. Box coordinates vary slightly.",
+    "shared_failure": "IDs 1 and 7 overlap in 14 frames with box IoU 0.59-0.76, median 0.65. Human landmark points on the same large bottle are covered by both IDs in sampled frames 242, 257, and 264. This creates two first-ID proposed decisions for one observed object in either setting.",
+    "second_object": "A smoky green bottle with white neck has a tracked box covering its manually marked landmark in only one of nine sampled frames under either setting. This is a candidate detection/localization miss, not a general recall estimate.",
+    "qualification": "The landmark audit covers two objects at 21 selected frames, not every object in the clip. It cannot establish a general ID-switch rate or detector recall."
+  },
+  "limits": "The video is unlabelled and differs in framing from WaRP-D. No mAP, identity accuracy, or speed claim is derived from this review. The review script writes MP4 and does not benchmark pipeline throughput."
+}

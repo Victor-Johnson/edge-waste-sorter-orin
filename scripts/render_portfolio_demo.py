@@ -17,20 +17,23 @@ SIZE = "1280:720"
 FPS = "25"
 
 
-def render_segment(source: Path, target: Path, seconds: float, caption: str,
-                   *, still: bool = False) -> None:
+def render_segment(source: Path, target: Path, seconds: float, caption: str | None,
+                   *, still: bool = False, crop: str | None = None) -> None:
     if not source.is_file():
         raise FileNotFoundError(source)
     font = Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")
     if not font.is_file():
         raise FileNotFoundError(font)
-    filtergraph = (
-        f"scale={SIZE}:force_original_aspect_ratio=decrease,"
-        f"pad={SIZE}:(ow-iw)/2:(oh-ih)/2:0x0b1612,"
-        f"drawtext=fontfile={font}:text='{caption}':"
-        "fontcolor=white:fontsize=22:x=24:y=684:"
-        "box=1:boxcolor=0x0b1612@0.88:boxborderw=8"
-    )
+    filters = []
+    if crop:
+        filters.append(f"crop={crop}")
+    filters += [f"scale={SIZE}:force_original_aspect_ratio=decrease",
+                f"pad={SIZE}:(ow-iw)/2:(oh-ih)/2:0x0b1612"]
+    if caption:
+        filters.append(f"drawtext=fontfile={font}:text='{caption}':"
+                       "fontcolor=white:fontsize=22:x=24:y=684:"
+                       "box=1:boxcolor=0x0b1612@0.88:boxborderw=8")
+    filtergraph = ",".join(filters)
     command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y"]
     if still:
         command += ["-loop", "1"]
@@ -47,20 +50,20 @@ def main() -> None:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     segments = [
         (MEDIA / "photos/01-dashboard-material-policy.png", 5.0,
-         "JETSON DASHBOARD | unlabelled Pexels replay | proposed decisions", True),
+         None, True, "1440:900:0:330"),
         (MEDIA / "videos/tracker_review/real_motion_default.mp4", 9.0,
-         "Pexels footage by Peter Hanzo | tracker overlay | no actuator", False),
+         "Pexels footage by Peter Hanzo | tracker overlay | no actuator", False, None),
         (MEDIA / "photos/02-accuracy-parity.png", 5.0,
-         "522-image test split | evaluator versions differ", True),
+         None, True, None),
         (MEDIA / "photos/03-latency-scopes.png", 5.0,
-         "Engine-only and video timing have different boundaries", True),
+         None, True, None),
     ]
     with tempfile.TemporaryDirectory(prefix="edge-demo-", dir=args.out.parent) as directory:
         folder = Path(directory)
         outputs = []
-        for index, (source, seconds, caption, still) in enumerate(segments, 1):
+        for index, (source, seconds, caption, still, crop) in enumerate(segments, 1):
             target = folder / f"{index:02d}.mp4"
-            render_segment(source, target, seconds, caption, still=still)
+            render_segment(source, target, seconds, caption, still=still, crop=crop)
             outputs.append(target)
         list_file = folder / "segments.txt"
         list_file.write_text("".join(f"file '{path}'\n" for path in outputs))

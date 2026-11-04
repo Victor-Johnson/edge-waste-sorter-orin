@@ -1,0 +1,66 @@
+{
+  "stage": "benchmark",
+  "timestamp_utc": "2026-11-04T14:47:17.676222+00:00",
+  "measurement_scope": "video decode + prediction + annotation + JPEG; excludes tracking and network streaming",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_fp16.engine",
+  "sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "source": "/home/jetson/edge-waste-sorter/data/sample_video/warp-d-replay.mp4",
+  "source_sha256": "e72a687c8f2550eed7139b5c5052fabe5ffaaa91ebd11b969c90a5f6979a5300",
+  "image_size": 640,
+  "confidence": 0.35,
+  "warmup_frames": 20,
+  "measured_frames": 280,
+  "end_to_end_fps": 16.57,
+  "pipeline_ms": {
+    "mean": 59.73,
+    "p50": 58.19,
+    "p95": 66.44
+  },
+  "decode_ms": {
+    "mean": 3.02,
+    "p50": 2.9,
+    "p95": 3.49
+  },
+  "predict_ms": {
+    "mean": 44.43,
+    "p50": 44.72,
+    "p95": 46.94
+  },
+  "draw_ms": {
+    "mean": 3.79,
+    "p50": 2.27,
+    "p95": 10.7
+  },
+  "jpeg_ms": {
+    "mean": 8.49,
+    "p50": 8.34,
+    "p95": 9.27
+  },
+  "detections": 1159,
+  "per_class_detections": {
+    "bottle-blue": 124,
+    "bottle-transp": 128,
+    "bottle-blue5l": 165,
+    "bottle-dark-full": 110,
+    "bottle-transp-full": 110,
+    "bottle-dark": 55,
+    "detergent-white": 55,
+    "bottle-multicolor": 27,
+    "bottle-green": 31,
+    "bottle-milk": 32,
+    "cans": 93,
+    "milk-cardboard": 75,
+    "glass-transp": 75,
+    "glass-dark": 75,
+    "bottle-yogurt": 3,
+    "detergent-color": 1
+  },
+  "track_enabled": false,
+  "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+  "environment": {
+    "hardware": "aarch64",
+    "ultralytics": "8.3.59",
+    "opencv": "4.10.0",
+    "device": "0"
+  }
+}

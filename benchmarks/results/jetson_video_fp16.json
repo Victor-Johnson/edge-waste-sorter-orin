@@ -1,0 +1,52 @@
+{
+  "stage": "benchmark",
+  "timestamp_utc": "2026-11-04T14:35:56.518176+00:00",
+  "measurement_scope": "video decode + prediction + annotation + JPEG; excludes tracking and network streaming",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_fp16.engine",
+  "sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "source": "/home/jetson/edge-waste-sorter/data/sample_video/waste-sorting-4.mp4",
+  "source_sha256": "3ca61412aac82e16027943c9cbe393ca93d6f5c8a665b350e3fa70402f04192b",
+  "image_size": 640,
+  "confidence": 0.35,
+  "warmup_frames": 20,
+  "measured_frames": 200,
+  "end_to_end_fps": 17.75,
+  "pipeline_ms": {
+    "mean": 55.97,
+    "p50": 55.82,
+    "p95": 64.74
+  },
+  "decode_ms": {
+    "mean": 3.19,
+    "p50": 3.17,
+    "p95": 3.44
+  },
+  "predict_ms": {
+    "mean": 42.88,
+    "p50": 42.84,
+    "p95": 51.83
+  },
+  "draw_ms": {
+    "mean": 0.8,
+    "p50": 0.76,
+    "p95": 0.86
+  },
+  "jpeg_ms": {
+    "mean": 9.1,
+    "p50": 9.05,
+    "p95": 9.94
+  },
+  "detections": 5,
+  "per_class_detections": {
+    "detergent-color": 3,
+    "cans": 2
+  },
+  "track_enabled": false,
+  "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+  "environment": {
+    "hardware": "aarch64",
+    "ultralytics": "8.3.59",
+    "opencv": "4.10.0",
+    "device": "0"
+  }
+}

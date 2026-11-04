@@ -1,0 +1,35 @@
+{
+  "format": "waste-sorter-deployment-v1",
+  "model": "02_yolo26m_best_fp16.engine",
+  "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "classes_sha256": "ec60e662b7f0f6edab5e004c740f5c08d313fd48c323266742129df68f4321e7",
+  "lanes_sha256": "351d95436dd5f90d1f69a48928ce9dbe640d9a88883df2af881830e74b572956",
+  "tracker": "botsort.yaml",
+  "tracker_config_sha256": "14322b677840851b4c7c397ae78a6dd4721ec663ea94540afb7950e03d2d17ce",
+  "policy_enabled": true,
+  "policy_version": "material-v1",
+  "policy_config_sha256": "18f84dcdb7123439669d16e872d699f7364f21722a0aed129d4f10aad2c16fed",
+  "duplicate_gate_enabled": false,
+  "validation_artifact_sha256": "79f6857266fbb9fb5b4b9b324b3d7fab219d8fdba84a4c966e0bd3ccc720d692",
+  "benchmark_artifact_sha256": "9c95fcc2ee187ede928005cc3ccf374cff8054689228f668b176c02ab60ef4a5",
+  "validation_mAP50_95": 0.47,
+  "benchmark_end_to_end_fps": 10.99,
+  "validation_scope": {
+    "imgsz": 640,
+    "split": "test",
+    "batch": 1,
+    "rect": false,
+    "conf": 0.001,
+    "iou": 0.7,
+    "device": "cuda:0"
+  },
+  "benchmark_scope": "video decode + prediction + BoT-SORT tracking + annotation + JPEG; excludes network streaming",
+  "environment": {
+    "hardware": "Jetson Orin Nano",
+    "power_mode": "15W",
+    "ultralytics": "8.3.59",
+    "tensorrt": "10.7.0",
+    "execution_provider": "TensorRT"
+  },
+  "note": "Advisory visual decisions only; no physical actuator path"
+}

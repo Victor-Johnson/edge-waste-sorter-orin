@@ -1,0 +1,377 @@
+{
+  "scope": "Unlabelled prediction replay; no accuracy claim",
+  "tape_sha256": "ecb78949dfe6838387923ee676417ace9427969b5ea8a07babe757b9597969ef",
+  "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f",
+  "classes_sha256": "ec60e662b7f0f6edab5e004c740f5c08d313fd48c323266742129df68f4321e7",
+  "tracker_config_sha256": "14322b677840851b4c7c397ae78a6dd4721ec663ea94540afb7950e03d2d17ce",
+  "manifest_sha256": "29f37033f5617c800a1bf2ed89965afd4598d6b1c5ddc3248943ced24276eba3",
+  "policy_config_sha256": "18f84dcdb7123439669d16e872d699f7364f21722a0aed129d4f10aad2c16fed",
+  "label_sha256": null,
+  "policies": [
+    {
+      "threshold": 0.4,
+      "proposed_routes": 4,
+      "proposed_reviews": 1,
+      "reason_counts": {
+        "stable_material_evidence": 4,
+        "track_disappeared": 1
+      },
+      "decisions": [
+        {
+          "timestamp": null,
+          "track_id": 1,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "track_disappeared",
+          "observations_used": 2,
+          "first_frame": 46,
+          "decision_frame": 50,
+          "confidence": 0.3896,
+          "class": "bottle-blue5l",
+          "bbox_xyxy": [
+            73.5,
+            454.6,
+            633.2,
+            907.0
+          ],
+          "last_observation_frame": 47,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 2,
+          "policy_version": "material-v1",
+          "status": "route",
+          "lane": "plastic",
+          "reason": "stable_material_evidence",
+          "observations_used": 5,
+          "first_frame": 172,
+          "decision_frame": 176,
+          "confidence": 0.4103,
+          "class": "bottle-green",
+          "bbox_xyxy": [
+            3.0,
+            991.5,
+            305.8,
+            1279.7
+          ],
+          "last_observation_frame": 176,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 7,
+          "policy_version": "material-v1",
+          "status": "route",
+          "lane": "plastic",
+          "reason": "stable_material_evidence",
+          "observations_used": 3,
+          "first_frame": 242,
+          "decision_frame": 244,
+          "confidence": 0.5856,
+          "class": "bottle-blue5l",
+          "bbox_xyxy": [
+            236.3,
+            375.1,
+            640.5,
+            716.9
+          ],
+          "last_observation_frame": 244,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 8,
+          "policy_version": "material-v1",
+          "status": "route",
+          "lane": "plastic",
+          "reason": "stable_material_evidence",
+          "observations_used": 3,
+          "first_frame": 244,
+          "decision_frame": 246,
+          "confidence": 0.5342,
+          "class": "bottle-transp",
+          "bbox_xyxy": [
+            0.9,
+            833.0,
+            117.6,
+            1059.6
+          ],
+          "last_observation_frame": 246,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 11,
+          "policy_version": "material-v1",
+          "status": "route",
+          "lane": "plastic",
+          "reason": "stable_material_evidence",
+          "observations_used": 3,
+          "first_frame": 257,
+          "decision_frame": 259,
+          "confidence": 0.4614,
+          "class": "bottle-transp",
+          "bbox_xyxy": [
+            246.3,
+            636.6,
+            603.9,
+            911.2
+          ],
+          "last_observation_frame": 259,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        }
+      ]
+    },
+    {
+      "threshold": 0.55,
+      "proposed_routes": 1,
+      "proposed_reviews": 4,
+      "reason_counts": {
+        "low_confidence": 3,
+        "stable_material_evidence": 1,
+        "track_disappeared": 1
+      },
+      "decisions": [
+        {
+          "timestamp": null,
+          "track_id": 1,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "track_disappeared",
+          "observations_used": 2,
+          "first_frame": 46,
+          "decision_frame": 50,
+          "confidence": 0.3896,
+          "class": "bottle-blue5l",
+          "bbox_xyxy": [
+            73.5,
+            454.6,
+            633.2,
+            907.0
+          ],
+          "last_observation_frame": 47,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 2,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 8,
+          "first_frame": 172,
+          "decision_frame": 182,
+          "confidence": 0.422,
+          "class": "bottle-green",
+          "bbox_xyxy": [
+            11.8,
+            985.6,
+            306.2,
+            1279.1
+          ],
+          "last_observation_frame": 181,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 7,
+          "policy_version": "material-v1",
+          "status": "route",
+          "lane": "plastic",
+          "reason": "stable_material_evidence",
+          "observations_used": 3,
+          "first_frame": 242,
+          "decision_frame": 244,
+          "confidence": 0.5856,
+          "class": "bottle-blue5l",
+          "bbox_xyxy": [
+            236.3,
+            375.1,
+            640.5,
+            716.9
+          ],
+          "last_observation_frame": 244,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 8,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 3,
+          "first_frame": 244,
+          "decision_frame": 249,
+          "confidence": 0.5342,
+          "class": "bottle-transp",
+          "bbox_xyxy": [
+            0.9,
+            833.0,
+            117.6,
+            1059.6
+          ],
+          "last_observation_frame": 246,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 11,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 4,
+          "first_frame": 257,
+          "decision_frame": 263,
+          "confidence": 0.4395,
+          "class": "bottle-transp",
+          "bbox_xyxy": [
+            250.5,
+            632.2,
+            602.0,
+            912.2
+          ],
+          "last_observation_frame": 260,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        }
+      ]
+    },
+    {
+      "threshold": 0.7,
+      "proposed_routes": 0,
+      "proposed_reviews": 5,
+      "reason_counts": {
+        "low_confidence": 4,
+        "track_disappeared": 1
+      },
+      "decisions": [
+        {
+          "timestamp": null,
+          "track_id": 1,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "track_disappeared",
+          "observations_used": 2,
+          "first_frame": 46,
+          "decision_frame": 50,
+          "confidence": 0.3896,
+          "class": "bottle-blue5l",
+          "bbox_xyxy": [
+            73.5,
+            454.6,
+            633.2,
+            907.0
+          ],
+          "last_observation_frame": 47,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 2,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 8,
+          "first_frame": 172,
+          "decision_frame": 182,
+          "confidence": 0.422,
+          "class": "bottle-green",
+          "bbox_xyxy": [
+            11.8,
+            985.6,
+            306.2,
+            1279.1
+          ],
+          "last_observation_frame": 181,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 8,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 3,
+          "first_frame": 244,
+          "decision_frame": 249,
+          "confidence": 0.5342,
+          "class": "bottle-transp",
+          "bbox_xyxy": [
+            0.9,
+            833.0,
+            117.6,
+            1059.6
+          ],
+          "last_observation_frame": 246,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 7,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 7,
+          "first_frame": 242,
+          "decision_frame": 252,
+          "confidence": 0.5645,
+          "class": "bottle-blue5l",
+          "bbox_xyxy": [
+            237.2,
+            374.2,
+            651.2,
+            703.3
+          ],
+          "last_observation_frame": 249,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        },
+        {
+          "timestamp": null,
+          "track_id": 11,
+          "policy_version": "material-v1",
+          "status": "review",
+          "lane": "review",
+          "reason": "low_confidence",
+          "observations_used": 4,
+          "first_frame": 257,
+          "decision_frame": 263,
+          "confidence": 0.4395,
+          "class": "bottle-transp",
+          "bbox_xyxy": [
+            250.5,
+            632.2,
+            602.0,
+            912.2
+          ],
+          "last_observation_frame": 260,
+          "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+          "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f"
+        }
+      ]
+    }
+  ]
+}
