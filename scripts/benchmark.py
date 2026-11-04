@@ -31,10 +31,10 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--mlflow", action="store_true", help="Log this run to the waste-sorter-edge MLflow experiment")
     args = parser.parse_args()
-    from dataclasses import replace
     from ultralytics import YOLO
-    settings = replace(load_settings(args.config), model=str(Path(args.model).resolve()), source=args.source)
-    model = YOLO(settings.model)
+    settings = load_settings(args.config, model_override=args.model,
+                             source_override=args.source)
+    model = YOLO(settings.model, task="detect")
     latencies = []
     counts = 0
     start = None

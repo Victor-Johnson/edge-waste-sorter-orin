@@ -47,6 +47,8 @@ def main() -> None:
     parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--confidence", type=float, default=.35)
     parser.add_argument("--device", default="0")
+    parser.add_argument("--track", action="store_true",
+                        help="Use persistent BoT-SORT tracking, matching the dashboard")
     args = parser.parse_args()
     if args.frames < 1 or args.warmup < 0:
         parser.error("--frames must be positive and --warmup nonnegative")
@@ -61,6 +63,8 @@ def main() -> None:
         raise RuntimeError(f"Cannot open video: {args.video}")
     times = {key: [] for key in ("decode", "predict", "draw", "jpeg", "frame")}
     classes = Counter()
+    observed_track_ids = set()
+    untracked_detections = 0
     measured_start = None
     try:
         for index in range(args.warmup + args.frames):
@@ -71,8 +75,13 @@ def main() -> None:
             decoded = time.perf_counter()
             if not ok:
                 break
-            result = model.predict(frame, imgsz=640, conf=args.confidence,
-                                   device=args.device, verbose=False)[0]
+            if args.track:
+                result = model.track(frame, imgsz=640, conf=args.confidence,
+                                     device=args.device, tracker="botsort.yaml",
+                                     persist=True, verbose=False)[0]
+            else:
+                result = model.predict(frame, imgsz=640, conf=args.confidence,
+                                       device=args.device, verbose=False)[0]
             predicted = time.perf_counter()
             result.names = dict(enumerate(names))  # trtexec engines have no Ultralytics class metadata
             annotated = result.plot()
@@ -87,6 +96,12 @@ def main() -> None:
                                    ("frame", finished - start)):
                     times[key].append(value * 1000)
                 classes.update(names[int(class_id)] for class_id in result.boxes.cls.tolist())
+                if args.track:
+                    ids = result.boxes.id
+                    if ids is None:
+                        untracked_detections += len(result.boxes)
+                    else:
+                        observed_track_ids.update(int(track_id) for track_id in ids.tolist())
     finally:
         capture.release()
     if not times["frame"]:
@@ -94,7 +109,9 @@ def main() -> None:
     elapsed = time.perf_counter() - measured_start
     record = {
         "stage": "benchmark", "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "measurement_scope": "video decode + prediction + annotation + JPEG; excludes tracking and network streaming",
+        "measurement_scope": ("video decode + prediction + BoT-SORT tracking + annotation + JPEG; "
+                              "excludes network streaming" if args.track else
+                              "video decode + prediction + annotation + JPEG; excludes tracking and network streaming"),
         "model": str(args.model.resolve()), "sha256": sha256(args.model),
         "source": str(args.video.resolve()), "source_sha256": sha256(args.video),
         "image_size": 640, "confidence": args.confidence,
@@ -106,10 +123,14 @@ def main() -> None:
         "draw_ms": summary(times["draw"]),
         "jpeg_ms": summary(times["jpeg"]),
         "detections": sum(classes.values()), "per_class_detections": dict(classes),
-        "track_enabled": False, "platform": platform.platform(),
+        "track_enabled": args.track, "platform": platform.platform(),
         "environment": {"hardware": platform.machine(), "ultralytics": ultralytics.__version__,
                         "opencv": cv2.__version__, "device": args.device},
     }
+    if args.track:
+        record["tracker"] = "botsort.yaml"
+        record["unique_track_ids_observed"] = len(observed_track_ids)
+        record["untracked_detections"] = untracked_detections
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record, indent=2))
