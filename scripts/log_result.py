@@ -12,7 +12,8 @@ from edge.tracking import log_record, tracking_uri
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--file", required=True)
-    parser.add_argument("--stage", choices=["validation", "benchmark", "engine_benchmark"], required=True)
+    parser.add_argument("--stage", choices=["validation", "benchmark", "engine_benchmark",
+                                            "decision_gate", "material_policy"], required=True)
     args = parser.parse_args()
     path = Path(args.file).resolve()
     record = json.loads(path.read_text())
