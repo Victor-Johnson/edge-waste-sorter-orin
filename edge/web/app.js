@@ -1,0 +1,12 @@
+const $=id=>document.getElementById(id),canvas=$('twin'),ctx=canvas.getContext('2d');
+let items=new Map(),seenDecisions=new Set(),lanes=['review'];
+ function update(s){$('state').textContent=s.error?'Error':s.finished?'Finished':'Running';$('fps').textContent=s.fps.toFixed(1);$('p50').textContent=s.pipeline_p50_ms??'—';$('p95').textContent=s.pipeline_p95_ms??'—';$('count').textContent=`${s.decisions_total} proposed decisions`;
+ if(s.error)$('state').title=s.error;
+ const now=performance.now();for(const d of s.recent_events){if(seenDecisions.has(d.track_id))continue;seenDecisions.add(d.track_id);items.set(d.track_id,{label:d.class,lane:d.lane,born:now})}for(const [key,item] of items)if(now-item.born>7000)items.delete(key);lanes=[...new Set(['review',...s.recent_events.map(e=>e.lane)])].slice(0,5);
+ $('rows').innerHTML=s.recent_events.slice(-20).reverse().map(e=>`<div class="row"><span>#${e.track_id}</span><span>${escapeHtml(e.class)}</span><span>${Math.round(e.confidence*100)}%</span><b>${escapeHtml(e.lane)}</b></div>`).join('')||'<p>Waiting for detections…</p>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const feed=new EventSource('/api/events');feed.onmessage=e=>update(JSON.parse(e.data));feed.onerror=()=>{$('state').textContent='Reconnecting'};
+function draw(){const w=canvas.width,h=canvas.height,now=performance.now();ctx.clearRect(0,0,w,h);ctx.fillStyle='#10251d';ctx.fillRect(40,160,w-80,150);ctx.strokeStyle='#527d59';ctx.lineWidth=3;ctx.strokeRect(40,160,w-80,150);for(let x=65;x<w-40;x+=58){ctx.strokeStyle='#315342';ctx.beginPath();ctx.moveTo(x,164);ctx.lineTo(x,306);ctx.stroke()}
+ const count=lanes.length;lanes.forEach((lane,i)=>{const x=80+i*(w-160)/count;ctx.fillStyle='#1c392c';ctx.fillRect(x,355,(w-180)/count,95);ctx.strokeStyle='#a8f15d';ctx.strokeRect(x,355,(w-180)/count,95);ctx.fillStyle='#cbe1ce';ctx.font='15px sans-serif';ctx.fillText(lane.toUpperCase(),x+12,410)});
+ for(const item of items.values()){const age=(now-item.born)/7000;if(age>1)continue;const laneIndex=Math.max(0,lanes.indexOf(item.lane));const target=80+laneIndex*(w-160)/count+(w-180)/count/2;const x=60+Math.min(age*1.7,1)*(target-60),y=235+(age>.6?(age-.6)*390:0);ctx.fillStyle='#a8f15d';ctx.beginPath();ctx.arc(x,y,17,0,Math.PI*2);ctx.fill();ctx.fillStyle='#e9f1ef';ctx.font='12px sans-serif';ctx.fillText(item.label.slice(0,18),x+23,y+4)}requestAnimationFrame(draw)}draw();
