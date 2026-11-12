@@ -17,6 +17,7 @@ exports/
 data/calibration/*
 !data/calibration/manifest.txt
 data/sample_video/*
+data/uploads/
 data/dataset.zip
 data/Warp-D/
 

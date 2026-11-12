@@ -22,15 +22,19 @@ def main():
     parser.add_argument("--material-policy", action="store_true",
                         help="Enable multi-frame advisory route/review policy")
     parser.add_argument("--manifest", help="Reject engine/config mismatches using a deployment manifest")
+    parser.add_argument("--wait-for-upload", action="store_true",
+                        help="Open the dashboard without starting a video; accept MP4 or image uploads in the browser")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
+    source = args.source or ("0" if args.wait_for_upload else None)
     settings = load_settings(args.config, model_override=args.model,
-                             source_override=args.source, tracker_override=args.tracker,
+                             source_override=source, tracker_override=args.tracker,
                              duplicate_gate_override=True if args.duplicate_gate else None,
                              policy_override=True if args.material_policy else None,
                              manifest_override=args.manifest)
-    uvicorn.run(create_app(settings), host=args.host, port=args.port)
+    uvicorn.run(create_app(settings, wait_for_upload=args.wait_for_upload),
+                host=args.host, port=args.port)
 
 
 if __name__ == "__main__":
