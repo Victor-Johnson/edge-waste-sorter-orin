@@ -36,6 +36,8 @@ def log_record(record: dict, result_file: str | Path, stage: str) -> str:
                 if stage == "decision_gate" else
                 f"material_policy:{'replay' if 'policies' in record else 'benchmark'}:{record['tape_sha256'][:8]}"
                 if stage == "material_policy" else f"{stage}:{model.stem}")
+    if stage == "material_policy" and record.get("label_sha256"):
+        run_name += ":partial" if "Partial" in record["scope"] else ":labelled"
     if stage == "benchmark" and "track_enabled" in record:
         run_name += ":track" if record["track_enabled"] else ":predict"
         if "no_gmc" in record.get("tracker", ""):
@@ -127,6 +129,10 @@ def log_record(record: dict, result_file: str | Path, stage: str) -> str:
                 mlflow.set_tag("classes_sha256", record["classes_sha256"])
             if "policies" in record:
                 mlflow.set_tag("has_ground_truth_labels", str(record["label_sha256"] is not None).lower())
+                mlflow.set_tag("labelled_evaluation_complete", str(
+                    bool(record["policies"] and
+                         record["policies"][0].get("labelled_evaluation", {}).get("labels_complete", False))
+                ).lower())
                 for report in record["policies"]:
                     suffix = str(report["threshold"]).replace(".", "p")
                     mlflow.log_metric(f"routes_at_{suffix}", report["proposed_routes"])

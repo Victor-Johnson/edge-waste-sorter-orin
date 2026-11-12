@@ -1,0 +1,64 @@
+{
+  "stage": "decision_gate_replay_benchmark",
+  "scope": "Pure Python decision processing of saved tracker events; excludes video decoding, TensorRT, drawing, JPEG, and network streaming",
+  "trace": "benchmarks/runs/tracker_review/real_motion_default.jsonl",
+  "trace_sha256": "ff1b6e824594c5349fed975ccd47bbdd140b20a21db70e4688c07a6c5a3a5827",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_fp16.engine",
+  "source": "/home/jetson/edge-waste-sorter/data/sample_video/pexels-plastic-bottles-13662401.mp4",
+  "tracker": "botsort.yaml",
+  "ultralytics": "8.3.59",
+  "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f",
+  "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "tracker_config_sha256": "14322b677840851b4c7c397ae78a6dd4721ec663ea94540afb7950e03d2d17ce",
+  "frames": 275,
+  "iterations": 300,
+  "warmup_iterations": 10,
+  "gate_config": {
+    "min_iou": 0.6,
+    "max_track_gap_frames": 5
+  },
+  "legacy": {
+    "decision_count": 5,
+    "decision_track_ids": [
+      1,
+      2,
+      7,
+      8,
+      11
+    ],
+    "suppressed_count": 0,
+    "suppressed": [],
+    "policy_latency": {
+      "mean_us": 0.564,
+      "p50_us": 0.544,
+      "p95_us": 0.704
+    }
+  },
+  "gated": {
+    "decision_count": 4,
+    "decision_track_ids": [
+      1,
+      2,
+      8,
+      11
+    ],
+    "suppressed_count": 1,
+    "suppressed": [
+      {
+        "track_id": 7,
+        "matched_track_id": 1,
+        "frame_id": 242,
+        "class": "bottle-blue5l",
+        "iou": 0.602,
+        "reason": "same_class_spatial_duplicate_candidate"
+      }
+    ],
+    "policy_latency": {
+      "mean_us": 4.008,
+      "p50_us": 4.0,
+      "p95_us": 4.992
+    }
+  },
+  "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+  "python": "3.10.12"
+}

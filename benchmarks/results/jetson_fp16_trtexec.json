@@ -1,0 +1,25 @@
+{
+  "stage": "engine_benchmark",
+  "source_note": "Reported from Jetson trtexec output",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_fp16.engine",
+  "sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "settings": {
+    "warmup_ms": 1000,
+    "duration_s": 10,
+    "batch": 1,
+    "input": "generated"
+  },
+  "throughput_qps": 49.6673,
+  "latency_mean_ms": 20.7451,
+  "latency_p95_ms": 20.7832,
+  "gpu_compute_mean_ms": 20.0893,
+  "gpu_compute_p95_ms": 20.1174,
+  "enqueue_mean_ms": 5.02462,
+  "h2d_mean_ms": 0.538101,
+  "d2h_mean_ms": 0.117625,
+  "environment": {
+    "hardware": "Jetson Orin Nano",
+    "power_mode": "15W",
+    "tensorrt": "10.7.0"
+  }
+}

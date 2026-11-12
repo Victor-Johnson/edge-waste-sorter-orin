@@ -1,0 +1,44 @@
+# Camera index 0 or a path under data/sample_video/. Override with --source.
+source: data/sample_video/warp-d-replay.mp4
+model: weights/detection/02_yolo26m_best.pt
+classes_file: data/Warp-D/classes.txt
+confidence: 0.35
+image_size: 640
+tracker: botsort.yaml
+# Experimental decision filter. Use --duplicate-gate to opt in without editing YAML.
+duplicate_gate_enabled: false
+duplicate_gate_min_iou: 0.60
+duplicate_gate_max_track_gap_frames: 5
+policy_enabled: false
+policy_config: configs/policy.yaml
+# Demonstration routing by packaging type. In WaRP, "-full" means air-filled,
+# not liquid-filled. Unknown classes go to review. No actuator is controlled.
+lanes:
+  bottle-blue: plastic
+  bottle-green: plastic
+  bottle-dark: plastic
+  bottle-milk: plastic
+  bottle-transp: plastic
+  bottle-multicolor: plastic
+  bottle-yogurt: plastic
+  bottle-oil: plastic
+  detergent-color: plastic
+  detergent-transparent: plastic
+  detergent-white: plastic
+  detergent-box: plastic
+  canister: plastic
+  bottle-blue5l: plastic
+  bottle-blue-full: plastic
+  bottle-transp-full: plastic
+  bottle-dark-full: plastic
+  bottle-green-full: plastic
+  bottle-multicolorv-full: plastic
+  bottle-milk-full: plastic
+  bottle-oil-full: plastic
+  bottle-blue5l-full: plastic
+  cans: metal
+  juice-cardboard: carton
+  milk-cardboard: carton
+  glass-transp: glass
+  glass-dark: glass
+  glass-green: glass

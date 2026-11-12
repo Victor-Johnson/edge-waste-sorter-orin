@@ -1,0 +1,7 @@
+# Advisory policy defaults. Select thresholds on labelled validation before
+# describing any measured routing performance or enabling this in a plant.
+version: material-v1
+min_observations: 3
+max_wait_frames: 10
+missing_grace_frames: 2
+min_mean_confidence: 0.55

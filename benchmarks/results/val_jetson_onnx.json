@@ -1,0 +1,30 @@
+{
+  "stage": "validation",
+  "source_note": "Reported from Jetson CLI output; metrics rounded to three decimals",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_static640_opset17.onnx",
+  "sha256": "273f7675408c0f2bcd5258cf3b5c1a30edf6871940dcc9947850488527be2b7b",
+  "dataset_yaml": "/home/jetson/edge-waste-sorter/data/Warp-D/dataset.yaml",
+  "settings": {
+    "imgsz": 640,
+    "split": "test",
+    "batch": 1,
+    "rect": false,
+    "conf": 0.001,
+    "iou": 0.7,
+    "device": "cpu"
+  },
+  "images": 522,
+  "instances": 1551,
+  "mAP50": 0.616,
+  "mAP50_95": 0.470,
+  "precision": 0.581,
+  "recall": 0.621,
+  "reported_inference_ms_per_image": 683.9,
+  "environment": {
+    "hardware": "Jetson Orin Nano",
+    "power_mode": "15W",
+    "ultralytics": "8.3.59",
+    "onnxruntime": "1.22.1",
+    "execution_provider": "CPUExecutionProvider"
+  }
+}

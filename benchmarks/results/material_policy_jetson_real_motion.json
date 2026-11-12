@@ -1,0 +1,31 @@
+{
+  "stage": "material_policy_replay_benchmark",
+  "scope": "Pure Python policy processing from saved tracker observations; excludes TensorRT, video, tracking, drawing, JPEG, network, and final EOF flush",
+  "tape_sha256": "ecb78949dfe6838387923ee676417ace9427969b5ea8a07babe757b9597969ef",
+  "manifest_sha256": "29f37033f5617c800a1bf2ed89965afd4598d6b1c5ddc3248943ced24276eba3",
+  "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f",
+  "tracker_config_sha256": "14322b677840851b4c7c397ae78a6dd4721ec663ea94540afb7950e03d2d17ce",
+  "policy_config_sha256": "18f84dcdb7123439669d16e872d699f7364f21722a0aed129d4f10aad2c16fed",
+  "config": {
+    "version": "material-v1",
+    "min_observations": 3,
+    "max_wait_frames": 10,
+    "missing_grace_frames": 2,
+    "min_mean_confidence": 0.55
+  },
+  "frames": 275,
+  "iterations": 200,
+  "warmup_iterations": 10,
+  "outcomes": {
+    "route": 1,
+    "review": 4
+  },
+  "policy_latency": {
+    "mean_us": 2.172,
+    "p50_us": 1.696,
+    "p95_us": 6.945
+  },
+  "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+  "python": "3.10.12"
+}

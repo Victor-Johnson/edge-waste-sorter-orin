@@ -1,0 +1,94 @@
+{
+  "stage": "benchmark",
+  "timestamp_utc": "2026-11-04T17:44:17.526687+00:00",
+  "measurement_scope": "video decode + prediction + BoT-SORT tracking + annotation + JPEG; excludes network streaming",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_fp16.engine",
+  "sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "source": "/home/jetson/edge-waste-sorter/data/sample_video/warp-d-replay.mp4",
+  "source_sha256": "e72a687c8f2550eed7139b5c5052fabe5ffaaa91ebd11b969c90a5f6979a5300",
+  "image_size": 640,
+  "confidence": 0.35,
+  "measurement_start_utc": "2026-11-04T17:43:51.862744+00:00",
+  "measurement_end_utc": "2026-11-04T17:44:17.526670+00:00",
+  "warmup_frames": 20,
+  "measured_frames": 280,
+  "end_to_end_fps": 10.91,
+  "pipeline_ms": {
+    "mean": 91.5,
+    "p50": 91.33,
+    "p95": 96.75
+  },
+  "decode_ms": {
+    "mean": 2.27,
+    "p50": 1.96,
+    "p95": 2.06
+  },
+  "predict_ms": {
+    "mean": 81.98,
+    "p50": 81.98,
+    "p95": 85.82
+  },
+  "draw_ms": {
+    "mean": 1.91,
+    "p50": 1.29,
+    "p95": 4.81
+  },
+  "jpeg_ms": {
+    "mean": 5.35,
+    "p50": 5.37,
+    "p95": 5.73
+  },
+  "detections": 1145,
+  "per_class_detections": {
+    "bottle-blue": 124,
+    "bottle-blue5l": 164,
+    "bottle-transp-full": 110,
+    "bottle-dark-full": 110,
+    "bottle-dark": 55,
+    "bottle-transp": 123,
+    "detergent-white": 55,
+    "bottle-multicolor": 26,
+    "bottle-green": 30,
+    "bottle-milk": 32,
+    "cans": 89,
+    "milk-cardboard": 75,
+    "glass-transp": 75,
+    "glass-dark": 75,
+    "bottle-yogurt": 2
+  },
+  "track_enabled": true,
+  "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+  "environment": {
+    "hardware": "aarch64",
+    "ultralytics": "8.3.59",
+    "opencv": "4.10.0",
+    "device": "0"
+  },
+  "tracker": "botsort.yaml",
+  "unique_track_ids_observed": 25,
+  "untracked_detections": 4,
+  "profile_tracker": true,
+  "tracker_update_ms": {
+    "mean": 31.84,
+    "p50": 30.59,
+    "p95": 33.5
+  },
+  "gmc_ms": {
+    "mean": 28.55,
+    "p50": 27.88,
+    "p95": 30.17
+  },
+  "tracker_update_excluding_gmc_ms": {
+    "mean": 3.3,
+    "p50": 2.89,
+    "p95": 5.38
+  },
+  "track_call_outside_update_ms": {
+    "mean": 50.14,
+    "p50": 51.83,
+    "p95": 53.24
+  },
+  "tracker_update_calls": 280,
+  "gmc_calls": 280,
+  "profile_note": "tracker_update_ms includes gmc_ms; times are measured inside the Python tracker call and may differ from an uninstrumented run"
+}

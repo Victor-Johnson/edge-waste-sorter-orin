@@ -1,0 +1,38 @@
+{
+  "stage": "tracker_identity_review",
+  "source": "data/sample_video/warp-d-replay.mp4",
+  "source_sha256": "e72a687c8f2550eed7139b5c5052fabe5ffaaa91ebd11b969c90a5f6979a5300",
+  "model": "exports/02_yolo26m_best_fp16.engine",
+  "model_sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "classes_sha256": "ec60e662b7f0f6edab5e004c740f5c08d313fd48c323266742129df68f4321e7",
+  "ultralytics": "8.3.59",
+  "image_size": 640,
+  "confidence": 0.35,
+  "frames": 300,
+  "scene_frames": 75,
+  "method": "Run scripts/jetson_track_review.py twice from frame 1 with persistent tracking. Compare per-frame JSONL track IDs and inspect annotated frames 75-77 at the scene cut. The replay has four static source images with a slight synthetic zoom and no ground-truth identities.",
+  "default": {
+    "tracker": "botsort.yaml",
+    "tracker_config_sha256": "14322b677840851b4c7c397ae78a6dd4721ec663ea94540afb7950e03d2d17ce",
+    "frame_level_detections": 1407,
+    "global_unique_track_ids": 27,
+    "track_ids_per_scene": [21, 3, 1, 3],
+    "untracked_detections": 4
+  },
+  "no_gmc": {
+    "tracker": "configs/trackers/botsort_no_gmc.yaml",
+    "tracker_config_sha256": "301430fca16927443321e0ec4a0e5296946164a0dfd95e147df8783c97746d58",
+    "frame_level_detections": 1407,
+    "global_unique_track_ids": 28,
+    "track_ids_per_scene": [21, 3, 1, 3],
+    "untracked_detections": 5
+  },
+  "observed_difference": {
+    "frame_75": "Default and no-GMC both assign ID 8 to a bottle-transp in scene 1.",
+    "frame_76": "A hard cut starts scene 2. Default assigns the can ID 8; no-GMC detects the can without a track ID.",
+    "frame_77": "Default keeps ID 8 on the can; no-GMC assigns the can new ID 24.",
+    "within_scene": "The runs have the same per-scene ID counts and frame-by-frame class counts. After relabeling IDs by scene, the per-frame object-to-ID associations are the same apart from frame 76's untracked can.",
+    "decision_effect": "With a persistent seen-ID set across the replay, new_decisions would emit 27 first-ID events for default and 28 for no-GMC. Default would suppress the can as a new proposed decision because ID 8 was already seen on the bottle."
+  },
+  "limits": "This is a synthetic replay with hard cuts and no physical-object identity labels. It cannot establish ID-switch rate on a real moving conveyor, and this review run writes MP4 so it is not a speed measurement."
+}

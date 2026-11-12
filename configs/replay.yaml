@@ -1,0 +1,11 @@
+# Curated WaRP-D test images with strong model detections across four material lanes.
+# The generated clip is explicitly marked as a dataset replay.
+fps: 25
+seconds_per_image: 3
+width: 960
+height: 540
+images:
+  - data/Warp-D/test/images/POSAD_1_12-Sep_20-16-19.jpg
+  - data/Warp-D/test/images/Monitoring_photo_2_test_25-Mar_11-42-07.jpg
+  - data/Warp-D/test/images/Monitoring_photo_test_25-Mar_11-49-46.jpg
+  - data/Warp-D/test/images/prepared_data_all_MGS-28-Oct_00-25-02.jpg

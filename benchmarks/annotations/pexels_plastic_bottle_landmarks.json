@@ -1,0 +1,41 @@
+{
+  "source": "data/sample_video/pexels-plastic-bottles-13662401.mp4",
+  "source_sha256": "fa4e776d696bb503ab0f1caf5a0c7aefc3dedad3f41352b06c80274dbd02b79f",
+  "image_size_wh": [720, 1280],
+  "method": "Points are placed by eye on distinctive parts of two physical bottles in source frames: the blue cap of a large clear bottle and the white neck of a smoky green bottle. Frame IDs are one-based. This is a sparse identity audit, not complete track annotation or class ground truth.",
+  "objects": [
+    {
+      "object_id": "large_clear_bottle_blue_cap_green_label",
+      "description": "Large clear bottle with blue cap and green-and-white label in the center of the conveyor",
+      "landmarks": [
+        {"frame_id": 46, "point_xy": [140, 720]},
+        {"frame_id": 80, "point_xy": [170, 675]},
+        {"frame_id": 120, "point_xy": [190, 610]},
+        {"frame_id": 160, "point_xy": [215, 580]},
+        {"frame_id": 200, "point_xy": [240, 550]},
+        {"frame_id": 225, "point_xy": [260, 525]},
+        {"frame_id": 240, "point_xy": [275, 520]},
+        {"frame_id": 242, "point_xy": [275, 520]},
+        {"frame_id": 250, "point_xy": [285, 510]},
+        {"frame_id": 257, "point_xy": [300, 500]},
+        {"frame_id": 264, "point_xy": [300, 495]},
+        {"frame_id": 270, "point_xy": [310, 480]}
+      ]
+    },
+    {
+      "object_id": "dark_green_bottle_white_neck",
+      "description": "Smoky green bottle with a white neck moving upward through the lower center of the frame",
+      "landmarks": [
+        {"frame_id": 120, "point_xy": [130, 1240]},
+        {"frame_id": 160, "point_xy": [175, 1100]},
+        {"frame_id": 200, "point_xy": [210, 1000]},
+        {"frame_id": 225, "point_xy": [230, 940]},
+        {"frame_id": 240, "point_xy": [245, 920]},
+        {"frame_id": 250, "point_xy": [250, 900]},
+        {"frame_id": 257, "point_xy": [270, 875]},
+        {"frame_id": 264, "point_xy": [275, 860]},
+        {"frame_id": 270, "point_xy": [280, 840]}
+      ]
+    }
+  ]
+}

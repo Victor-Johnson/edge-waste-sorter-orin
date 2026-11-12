@@ -1,0 +1,100 @@
+{
+  "stage": "benchmark",
+  "timestamp_utc": "2026-11-04T17:32:21.480952+00:00",
+  "measurement_scope": "video decode + prediction + BoT-SORT tracking + annotation + JPEG; excludes network streaming",
+  "model": "/home/jetson/edge-waste-sorter/exports/02_yolo26m_best_fp16.engine",
+  "sha256": "e83574039fb7b3993dc7edc1177f9d7c927e45b6f35912c973d4e7afce676d14",
+  "source": "/home/jetson/edge-waste-sorter/data/sample_video/warp-d-replay.mp4",
+  "source_sha256": "e72a687c8f2550eed7139b5c5052fabe5ffaaa91ebd11b969c90a5f6979a5300",
+  "image_size": 640,
+  "confidence": 0.35,
+  "measurement_start_utc": "2026-11-04T17:31:56.480407+00:00",
+  "measurement_end_utc": "2026-11-04T17:32:21.480937+00:00",
+  "warmup_frames": 20,
+  "measured_frames": 280,
+  "end_to_end_fps": 11.2,
+  "pipeline_ms": {
+    "mean": 89.14,
+    "p50": 89.66,
+    "p95": 93.44
+  },
+  "decode_ms": {
+    "mean": 1.89,
+    "p50": 1.89,
+    "p95": 2.01
+  },
+  "predict_ms": {
+    "mean": 80.15,
+    "p50": 80.87,
+    "p95": 83.83
+  },
+  "draw_ms": {
+    "mean": 1.84,
+    "p50": 1.24,
+    "p95": 4.52
+  },
+  "jpeg_ms": {
+    "mean": 5.26,
+    "p50": 5.23,
+    "p95": 5.57
+  },
+  "detections": 1145,
+  "per_class_detections": {
+    "bottle-blue": 124,
+    "bottle-blue5l": 164,
+    "bottle-transp-full": 110,
+    "bottle-dark-full": 110,
+    "bottle-dark": 55,
+    "bottle-transp": 123,
+    "detergent-white": 55,
+    "bottle-multicolor": 26,
+    "bottle-green": 30,
+    "bottle-milk": 32,
+    "cans": 89,
+    "milk-cardboard": 75,
+    "glass-transp": 75,
+    "glass-dark": 75,
+    "bottle-yogurt": 2
+  },
+  "track_enabled": true,
+  "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+  "environment": {
+    "hardware": "aarch64",
+    "ultralytics": "8.3.59",
+    "opencv": "4.10.0",
+    "device": "0"
+  },
+  "tracker": "botsort.yaml",
+  "unique_track_ids_observed": 25,
+  "untracked_detections": 4,
+  "power_mode": "NV Power Mode: 15W",
+  "power": {
+    "rail": "VDD_IN",
+    "unit": "W",
+    "sample_interval_ms": 500,
+    "idle_sample_count": 8,
+    "active_sample_count": 47,
+    "idle_vdd_in_w": {
+      "mean": 4.38,
+      "min": 4.34,
+      "max": 4.57
+    },
+    "active_vdd_in_w": {
+      "mean": 6.55,
+      "min": 6.36,
+      "max": 6.8
+    },
+    "active_gpu_temp_c": {
+      "mean": 48.97,
+      "min": 48.44,
+      "max": 49.53
+    },
+    "active_gpu_util_pct": {
+      "mean": 39.64,
+      "min": 0,
+      "max": 99
+    },
+    "scope": "Jetson input rail, not wall-plug power; one-second timestamp precision"
+  },
+  "telemetry_raw_log": "jetson_power_track.tegrastats.log"
+}

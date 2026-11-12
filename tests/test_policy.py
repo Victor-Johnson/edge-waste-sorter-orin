@@ -5,7 +5,7 @@ import json
 import pytest
 
 from edge.pipeline.policy import MaterialPolicy, PolicyConfig
-from scripts.evaluate_policy import score
+from scripts.evaluate_policy import score, score_physical_items
 
 
 def observation(track_id=7, lane="plastic", confidence=.8, name="bottle-blue"):
@@ -96,6 +96,46 @@ def test_labelled_evaluation_counts_wrong_routes_and_missing():
     assert result["cross_material_error_per_route"] == 1.0
     assert result["material_confusion"] == {"plastic->glass": 1}
     assert result["missing_decisions"] == [3]
+
+
+def test_physical_item_labels_group_split_track_ids_without_false_rates():
+    decisions = [{"track_id": 1, "status": "review", "lane": "review"},
+                 {"track_id": 7, "status": "route", "lane": "plastic"},
+                 {"track_id": 9, "status": "route", "lane": "glass"}]
+    labels = {"schema": "physical-items-v1", "complete": False,
+              "items": [{"physical_id": "one-bottle", "lane": "plastic", "track_ids": [1, 7]}]}
+    result = score_physical_items(decisions, labels)
+    assert result["labelled_items"] == 1
+    assert result["duplicate_decision_items"] == 1
+    assert result["items_with_any_route"] == 1
+    assert result["automatic_coverage"] is None
+    assert result["cross_material_error_per_route"] is None
+    assert result["unmatched_track_ids"] == [9]
+
+
+def test_complete_physical_item_labels_report_cross_material_error():
+    decisions = [{"track_id": 1, "status": "route", "lane": "glass"},
+                 {"track_id": 7, "status": "route", "lane": "plastic"}]
+    labels = {"schema": "physical-items-v1", "complete": True,
+              "items": [{"physical_id": "one-bottle", "lane": "plastic", "track_ids": [1, 7]}]}
+    result = score_physical_items(decisions, labels)
+    assert result["automatic_coverage"] == 1.0
+    assert result["cross_material_error_per_route"] == .5
+    assert result["duplicate_route_items"] == 1
+    assert result["material_confusion"] == {"plastic->glass": 1}
+
+
+def test_complete_physical_labels_must_account_for_false_positive_tracks():
+    decisions = [{"track_id": 8, "status": "route", "lane": "metal"}]
+    labels = {"schema": "physical-items-v1", "complete": True,
+              "items": [{"physical_id": "missed-bottle", "lane": "plastic", "track_ids": []}]}
+    with pytest.raises(ValueError, match="unmatched track IDs"):
+        score_physical_items(decisions, labels)
+    labels["false_positive_track_ids"] = [8]
+    report = score_physical_items(decisions, labels)
+    assert report["missed_items"] == 1
+    assert report["false_positive_route_proposals"] == 1
+    assert report["automatic_coverage"] == 0.0
 
 
 def test_invalid_policy_parameters():

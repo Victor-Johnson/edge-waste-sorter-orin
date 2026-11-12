@@ -1,0 +1,115 @@
+{
+  "stage": "onnx_export",
+  "timestamp_utc": "2026-10-02T16:11:08.855287+00:00",
+  "checkpoint": {
+    "file": "02_yolo26m_best.pt",
+    "sha256": "3316df0893c2c2e7559f8cf0a85978baf17184b55ae18b30f1d9ebdc7a58b3d5"
+  },
+  "export_settings": {
+    "imgsz": 640,
+    "batch": 1,
+    "dynamic": false,
+    "half": false,
+    "opset": 17,
+    "device": "cpu"
+  },
+  "io_signature": {
+    "inputs": [
+      {
+        "name": "images",
+        "shape": [
+          1,
+          3,
+          640,
+          640
+        ],
+        "dtype": "tensor(float)"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "output0",
+        "shape": [
+          1,
+          32,
+          8400
+        ],
+        "dtype": "tensor(float)"
+      }
+    ]
+  },
+  "raw_graph": {
+    "file": "02_yolo26m_best_raw.onnx",
+    "sha256": "c68fa5da990c99401b6b5117947b53270d3c2c2d172f85d43d4a7bcbb8b8983f",
+    "size_mb": 81.74,
+    "opset": 17,
+    "node_count": 438,
+    "op_histogram": {
+      "Conv": 112,
+      "Mul": 102,
+      "Sigmoid": 98,
+      "Constant": 30,
+      "Add": 25,
+      "Concat": 25,
+      "Reshape": 12,
+      "Split": 11,
+      "Transpose": 4,
+      "MatMul": 4,
+      "MaxPool": 3,
+      "Softmax": 2,
+      "Resize": 2,
+      "Div": 2,
+      "Slice": 2,
+      "Sub": 2,
+      "Shape": 1,
+      "Gather": 1
+    }
+  },
+  "slim_graph": {
+    "file": "02_yolo26m_best_static640_opset17.onnx",
+    "sha256": "273f7675408c0f2bcd5258cf3b5c1a30edf6871940dcc9947850488527be2b7b",
+    "size_mb": 81.79,
+    "opset": 17,
+    "node_count": 402,
+    "op_histogram": {
+      "Conv": 112,
+      "Mul": 100,
+      "Sigmoid": 98,
+      "Concat": 25,
+      "Add": 24,
+      "Reshape": 12,
+      "Split": 11,
+      "Transpose": 4,
+      "MatMul": 4,
+      "MaxPool": 3,
+      "Softmax": 2,
+      "Resize": 2,
+      "Slice": 2,
+      "Sub": 2,
+      "Div": 1
+    }
+  },
+  "slim_parity": {
+    "input": "uniform[0,1], seed=0",
+    "passed": true,
+    "outputs": [
+      {
+        "index": 0,
+        "shape": [
+          1,
+          32,
+          8400
+        ],
+        "max_abs_diff": 0.0,
+        "all_finite": true
+      }
+    ]
+  },
+  "environment": {
+    "ultralytics": "8.4.171",
+    "torch": "2.14.1+cu130",
+    "onnx": "1.23.1",
+    "onnxruntime": "1.30.0",
+    "onnxslim": "0.1.97"
+  }
+}

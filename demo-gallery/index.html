@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore four saved Jetson waste-sorting examples, including a real tracking failure.">
+  <title>Waste Sorter // Four Saved Examples</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Waste Sorter / Edge Lab</p>
+        <h1>What does the camera <em>actually</em> see?</h1>
+        <p class="lead">Explore four moments from a recycling belt. Reveal what the Jetson model detected, see when it asked for a person, and find one mistake we caught.</p>
+      </div>
+      <div class="hero-facts" aria-label="Demo facts">
+        <div><strong>4</strong><span>saved moments</span></div>
+        <div><strong>0</strong><span>VPS model runs</span></div>
+        <p>These are recorded model outputs. Clicking around does not run AI or send your files anywhere.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="choice" aria-labelledby="choose-title">
+        <div class="section-heading"><span class="eyebrow">01 / Choose a moment</span><h2 id="choose-title">Follow the evidence</h2></div>
+        <div id="sample-list" class="sample-list" role="group" aria-label="Saved examples"></div>
+      </section>
+
+      <section class="explorer" aria-labelledby="moment-title">
+        <div class="visual-column">
+          <div class="visual-head"><span id="frame-label">Saved frame</span><span>Camera → model</span></div>
+          <button id="toggle-boxes" class="reveal" type="button" aria-pressed="false">Reveal model boxes</button>
+          <div class="frame-wrap">
+            <img id="frame-image" src="assets/01-spot-bottle.jpg" alt="Recycling belt frame" width="720" height="1280">
+            <svg id="box-overlay" viewBox="0 0 720 1280" aria-hidden="true"></svg>
+            <div id="image-hint" class="image-hint">Camera view</div>
+          </div>
+        </div>
+
+        <div class="story-column">
+          <p class="eyebrow">02 / Understand the result</p>
+          <h2 id="moment-title">Loading saved example…</h2>
+          <p id="moment-prompt" class="prompt"></p>
+          <span id="result-label" class="result-label"></span>
+          <p id="explanation" class="explanation"></p>
+          <div class="evidence-card">
+            <h3>What the saved result says</h3>
+            <p id="decision-note"></p>
+          </div>
+          <div class="detections">
+            <h3>Objects in this frame</h3>
+            <div id="object-list" class="object-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div><p class="eyebrow">03 / What this proves</p><h2 id="method-title">A saved example is still useful evidence.</h2></div>
+        <p>The model and tracking ran on a Jetson Orin Nano. This page only displays four stored frames and their recorded outputs, so it can be hosted as static files. The examples show behaviour and one failure; they do not measure sorting accuracy across a plant.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Footage: <a href="https://www.pexels.com/video/people-working-in-sorting-plastic-bottles-13662401/">Peter Hanzo / Pexels</a>. The model output is advisory. No sorting machine was connected.</p>
+      <details><summary>Evidence and method</summary><p>Saved Jetson FP16 tracker trace, frames 151, 176, 244, and 242. The optional material-v1 policy used a 0.55 mean-score threshold; model scores are not calibrated probabilities. The same physical bottle was manually linked to track IDs 1 and 7 in a partial one-item audit. See <a href="https://github.com/Victor-Johnson/edge-waste-sorter-orin">the project repository</a> for code and benchmark scope. Images and sample data are stored beside this page.</p></details>
+    </footer>
+  </div>
+</body>
+</html>
